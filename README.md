@@ -1,2 +1,2 @@
 # go-paymaster
-Go Implementation of Paymaster server in Account Abstract
+Go Implementation of Account Abstraction Paymaster server.
