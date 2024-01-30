@@ -1,13 +1,18 @@
 package contract
 
 import (
+	"math/big"
+
 	"github.com/dbadoy/go-paymaster/pkg/signer"
 	"github.com/dbadoy/go-paymaster/pkg/userop"
 	"github.com/ethereum/go-ethereum/accounts/abi"
 	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/core/types"
 )
 
 type PaymasterCaller interface {
+	Deposit() (*types.Transaction, error)
+	GetDeposit() (*big.Int, error)
 	GetHash(userOp *userop.UserOperation, paymasterID common.Address) ([32]byte, error)
 }
 
@@ -24,6 +29,14 @@ type Paymaster struct {
 
 func (p *Paymaster) ContractAddress() common.Address {
 	return p.address
+}
+
+func (p *Paymaster) Deposit() (*types.Transaction, error) {
+	return p.caller.Deposit()
+}
+
+func (p *Paymaster) GetDeposit() (*big.Int, error) {
+	return p.caller.GetDeposit()
 }
 
 func (p *Paymaster) Sign(userOp *userop.UserOperation) error {
